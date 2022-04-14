@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 
 export default function SearchBar(props){
     // We can comment out our searchTerm state variable as we are not using it!

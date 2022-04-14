@@ -1,18 +1,19 @@
 // imports
-import { useEffect, useState } from 'react'
-import Gallery from './components/Gallery'
-import SearchBar from './components/SearchBar'
+import React, { useEffect, useState } from 'react';
+import Gallery from './components/Gallery';
+import SearchBar from './components/SearchBar';
+import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
+import ArtistView from './components/ArtistView';
+import AlbumView from './components/AlbumView';
 
 // functional component
 export default function App(){
   // vanilla js section
-
-    const API_URL = 'https://itunes.apple.com/search?term=';
-    
-    let [search, setSearch] = useState('');
-    let [message, setMessage] = useState('Search for Music!');
-    let [data, setData] = useState([]);
-
+  let [search, setSearch] = useState('');
+  let [message, setMessage] = useState('Search for Music!');
+  let [data, setData] = useState([]);
+  
+  const API_URL = 'https://itunes.apple.com/search?term=';
 
     // functions section
     useEffect(() => {
@@ -38,12 +39,22 @@ export default function App(){
 
     // jsx section
     return (
-        <div>
-            <SearchBar handleSearch= {handleSearch}/>
-            {message}
-            <Gallery data={data} />
-        </div>
-    )
+      <div>
+      {message}
+          <Router>
+              <Routes>
+                  <Route path="/" element={
+                      <React.Fragment>
+                          <SearchBar handleSearch = {handleSearch}/>
+                          <Gallery data={data} />
+                      </React.Fragment>
+                  } />
+                  <Route path="/album/:id" element={<AlbumView />} />
+                  <Route path="/artist/:id" element={<ArtistView />} />
+              </Routes>
+          </Router>
+      </div>
+  )
 }
 
 
