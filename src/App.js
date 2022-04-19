@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Gallery from './components/Gallery';
 import SearchBar from './components/SearchBar';
-import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ArtistView from './components/ArtistView';
 import AlbumView from './components/AlbumView';
 
@@ -41,7 +41,6 @@ export default function App(){
     return (
       <div>
       {message}
-          <Router>
               <Routes>
                   <Route path="/" element={
                       <React.Fragment>
@@ -52,7 +51,6 @@ export default function App(){
                   <Route path="/album/:id" element={<AlbumView />} />
                   <Route path="/artist/:id" element={<ArtistView />} />
               </Routes>
-          </Router>
       </div>
   )
 }
