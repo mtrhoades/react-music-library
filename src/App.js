@@ -1,13 +1,16 @@
 // imports
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Gallery from './components/Gallery';
 import SearchBar from './components/SearchBar';
 import { Route, Routes } from 'react-router-dom';
 import ArtistView from './components/ArtistView';
 import AlbumView from './components/AlbumView';
+import { DataContext } from './context/DataContext';
+import { SearchContext } from './context/SearchContext'
+import Spinner from './components/Spinner'
 
 // functional component
-export default function App(){
+export default function App () {
   // vanilla js section
   let [search, setSearch] = useState('');
   let [message, setMessage] = useState('Search for Music!');
@@ -37,6 +40,20 @@ export default function App(){
       setSearch(term)
     }
 
+
+
+    const renderGallery = () => {
+      if (data) {
+        return (
+          <Suspense fallback={<Spinner />}>
+            {/* <Gallery /> */}
+          </Suspense>
+        )
+      }
+    }
+
+
+
     // jsx section
     return (
       <div>
@@ -45,6 +62,10 @@ export default function App(){
                   <Route path="/" element={
                       <React.Fragment>
                           <SearchBar handleSearch = {handleSearch}/>
+                          <SearchContext.Provider />
+                          <DataContext.Provider value={data} />
+                            {renderGallery()}
+                          <DataContext.Provider />
                           <Gallery data={data} />
                       </React.Fragment>
                   } />
